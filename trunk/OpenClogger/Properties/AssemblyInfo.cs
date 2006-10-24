@@ -60,3 +60,5 @@ using OCInterface.SvnAttributes;
 [assembly: SvnId("AssemblyInfo.cs", "$Id$")]
 [assembly: SvnRevision("AssemblyInfo.cs", "$Revision$")]
 [assembly: SvnAuthor("AssemblyInfo.cs", "$Author$")]
+[assembly: SvnHeadUrl("AssemblyInfo.cs", "$HeadURL$")]
+[assembly: SvnDate("AssemblyInfo.cs", "$Date$")]
