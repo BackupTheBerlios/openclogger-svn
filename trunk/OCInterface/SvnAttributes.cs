@@ -11,7 +11,7 @@
 // the license can be found in the LICENSE file in the
 // root of the distribution or at the following URL:
 //
-// http://svn.berlios.de/svnroot/repos/OCInterface/trunk/LICENSE
+// http://svn.berlios.de/svnroot/repos/openclogger/trunk/LICENSE
 //
 
 using System;
