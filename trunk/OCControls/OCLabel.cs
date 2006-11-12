@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // OpenClogger - OCControls - OCLabel.cs
 // $Id$
@@ -24,15 +24,30 @@ using System.Windows.Forms;
 
 // Subversion version control attributes
 using OCInterface.SvnAttributes;
-[assembly: SvnId("OCLabel.cs", "$Id$")]
-[assembly: SvnRevision("OCLabel.cs", "$Revision$")]
-[assembly: SvnAuthor("OCLabel.cs", "$Author$")]
-[assembly: SvnHeadUrl("OCLabel.cs", "$HeadURL$")]
-[assembly: SvnDate("OCLabel.cs", "$Date$")]
+[assembly: SvnId("$Id$")]
+[assembly: SvnHeadUrl("$HeadURL$")]
 
 namespace OCControls
 {
-    public partial class OCLabel : Label
+    public partial class OCLabel : Label, IPaintBackground
     {
+        public event PaintEventHandler PaintBackground;
+        protected override void OnPaintBackground( PaintEventArgs pevent )
+        {
+            if ( PaintBackground != null )
+            {
+                PaintBackground( this, pevent );
+            }
+        }
+
+        public Control GetOCParentControl( )
+        {
+            Control result = this;
+            if ( Parent is IPaintBackground )
+            {
+                result = ( (IPaintBackground)Parent ).GetOCParentControl();
+            }
+            return result;
+        }
     }
 }

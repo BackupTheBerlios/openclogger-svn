@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// OpenClogger - OpenClogger - Program.cs
+// OpenClogger - OCControls - OCButton.cs
 // $Id$
 // $HeadURL$
 //
@@ -15,27 +15,18 @@
 //
 
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 // Subversion version control attributes
 using OCInterface.SvnAttributes;
-[assembly: SvnId("$Id$")]
-[assembly: SvnHeadUrl("$HeadURL$")]
+[assembly: SvnId( "$Id$" )]
+[assembly: SvnHeadUrl( "$HeadURL$" )]
 
-namespace OpenClogger
+namespace OCControls
 {
-    static class Program
+    public interface IPaintBackground
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new AboutForm());
-        }
+        event PaintEventHandler PaintBackground;
+        Control GetOCParentControl( );
     }
 }

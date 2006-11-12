@@ -1,6 +1,6 @@
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// OpenClogger - OCControls - OCButton.cs
+// OpenClogger - OCControls - OCLabel.cs
 // $Id$
 // $HeadURL$
 //
@@ -24,12 +24,12 @@ using System.Windows.Forms;
 
 // Subversion version control attributes
 using OCInterface.SvnAttributes;
-[assembly: SvnId("$Id$")]
-[assembly: SvnHeadUrl("$HeadURL$")]
+[assembly: SvnId( "$Id$" )]
+[assembly: SvnHeadUrl( "$HeadURL$" )]
 
 namespace OCControls
 {
-    public partial class OCButton : Button, IPaintBackground 
+    public partial class OCLinkLabel : LinkLabel, IPaintBackground
     {
         public event PaintEventHandler PaintBackground;
         protected override void OnPaintBackground( PaintEventArgs pevent )

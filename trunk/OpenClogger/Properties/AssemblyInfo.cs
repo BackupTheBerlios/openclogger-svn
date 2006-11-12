@@ -19,6 +19,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using OCInterface.SvnAttributes;
+using OCInterface.OpenCloggerAttributes;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -55,10 +56,8 @@ using OCInterface.SvnAttributes;
 [assembly: AssemblyVersion("0.0.1.0")]
 [assembly: AssemblyFileVersion("0.0.1.0")]
 [assembly: AssemblyInformationalVersion("0.0.1.0")]
+[assembly: OpenCloggerAssembly]
 
 // Subversion version control attributes
-[assembly: SvnId("AssemblyInfo.cs", "$Id$")]
-[assembly: SvnRevision("AssemblyInfo.cs", "$Revision$")]
-[assembly: SvnAuthor("AssemblyInfo.cs", "$Author$")]
-[assembly: SvnHeadUrl("AssemblyInfo.cs", "$HeadURL$")]
-[assembly: SvnDate("AssemblyInfo.cs", "$Date$")]
+[assembly: SvnId("$Id$")]
+[assembly: SvnHeadUrl("$HeadURL$")]

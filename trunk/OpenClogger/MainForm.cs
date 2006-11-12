@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // OpenClogger - OpenClogger - MainForm.cs
 // $Id$
@@ -25,11 +25,8 @@ using OCControls;
 
 // Subversion version control attributes
 using OCInterface.SvnAttributes;
-[assembly: SvnId("MainForm.cs", "$Id$")]
-[assembly: SvnRevision("MainForm.cs", "$Revision$")]
-[assembly: SvnAuthor("MainForm.cs", "$Author$")]
-[assembly: SvnHeadUrl("MainForm.cs", "$HeadURL$")]
-[assembly: SvnDate("MainForm.cs", "$Date$")]
+[assembly: SvnId("$Id$")]
+[assembly: SvnHeadUrl("$HeadURL$")]
 
 namespace OpenClogger
 {
@@ -38,6 +35,13 @@ namespace OpenClogger
         public MainForm()
         {
             InitializeComponent();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            AboutForm about = new AboutForm();
+            about.ShowDialog( this );
+            Application.Exit();
         }
     }
 }

@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // OpenClogger - OpenClogger - MainForm.Designer.cs
 // $Id$
@@ -16,11 +16,8 @@
 
 // Subversion version control attributes
 using OCInterface.SvnAttributes;
-[assembly: SvnId("MainForm.Designer.cs", "$Id$")]
-[assembly: SvnRevision("MainForm.Designer.cs", "$Revision$")]
-[assembly: SvnAuthor("MainForm.Designer.cs", "$Author$")]
-[assembly: SvnHeadUrl("MainForm.Designer.cs", "$HeadURL$")]
-[assembly: SvnDate("MainForm.Designer.cs", "$Date$")]
+[assembly: SvnId("$Id$")]
+[assembly: SvnHeadUrl("$HeadURL$")]
 
 namespace OpenClogger
 {
@@ -52,9 +49,18 @@ namespace OpenClogger
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // MainForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(292, 273);
+            this.Name = "MainForm";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.ResumeLayout(false);
+
         }
 
         #endregion

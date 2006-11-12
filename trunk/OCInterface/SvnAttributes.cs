@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // OCInterface - OCInterface - SvnAttributes.cs
 // $Id$
@@ -15,126 +15,110 @@
 //
 
 using System;
+using System.Text.RegularExpressions;
 
 // Subversion version control attributes
 using OCInterface.SvnAttributes;
-[assembly: SvnId("SvnAttributes.cs", "$Id$")]
-[assembly: SvnRevision("SvnAttributes.cs", "$Revision$")]
-[assembly: SvnAuthor("SvnAttributes.cs", "$Author$")]
-[assembly: SvnHeadUrl("SvnAttributes.cs", "$HeadURL$")]
-[assembly: SvnDate("SvnAttributes.cs", "$Date$")]
+[assembly: SvnId("$Id$")]
+[assembly: SvnHeadUrl("$HeadURL$")]
 
 namespace OCInterface.SvnAttributes
 {
-    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple=true, Inherited=false)]
-    public class SvnRevisionAttribute : Attribute
-    {
-        public SvnRevisionAttribute( string file, string revision )
-        {
-            mSvnRevision = (string)revision.Clone();
-        }
-
-        public string SvnRevision
-        {
-            get { return mSvnRevision; }
-        }
-
-        public int Revision
-        {
-            get
-            {
-                return 0;
-            }
-        }
-
-        private string mSvnRevision = null;
-    }
-
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true, Inherited = false)]
     public class SvnIdAttribute : Attribute
     {
-        public SvnIdAttribute(string file, string id)
+        public SvnIdAttribute(string id)
         {
             mSvnId = (string)id.Clone();
+
+            string regexFile   = @"\s+(?<file>.*\..{2,5})";
+            string regexRev    = @"\s+(?<rev>\d+)";
+            string regexDate   = @"\s+(?<date>(?<year>\d{4})-(?<month>\d{1,2})-(?<day>\d{1,2}))";
+            string regexTime   = @"\s+(?<time>(?<hour>\d{2}):(?<min>\d{2}):(?<sec>\d{2}))\w";
+            string regexAuthor = @"\s+(?<author>\w+)";
+
+            string regex = @"^[$]Id:"+regexFile+regexRev+regexDate+regexTime+regexAuthor+@"\s[$]$";
+            Match match = new Regex( regex ).Match( SvnId );
+            mFile = match.Result( @"${file}" );
+            mRevision = match.Result( @"${rev}" );
+            mAuthor = match.Result( @"${author}" );
+
+            int year = Convert.ToInt32( match.Result( @"${year}" ) );
+            int month = Convert.ToInt32( match.Result( @"${month}" ) );
+            int day = Convert.ToInt32( match.Result( @"${day}" ) );
+            int hour = Convert.ToInt32( match.Result( @"${hour}" ) );
+            int min = Convert.ToInt32( match.Result( @"${min}" ) );
+            int second = Convert.ToInt32( match.Result( @"${sec}" ) );
+
+            mLastEdit = new DateTime( year, month, day, hour, min, second, DateTimeKind.Utc );
         }
 
-        public string SvnId
-        {
-            get { return mSvnId; }
-        }
+        public string File
+        { get { return mFile; } }
 
-        private string mSvnId = null;
-    }
-
-    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true, Inherited = false)]
-    public class SvnAuthorAttribute : Attribute
-    {
-        public SvnAuthorAttribute(string file, string author)
-        {
-            mSvnAuthor = (string)author.Clone();
-        }
-
-        public string SvnAuthor
-        {
-            get { return mSvnAuthor; }
-        }
+        public string Revision
+        { get { return mRevision; } }
 
         public string Author
-        {
-            get
-            {
-                return null;
-            }
-        }
+        { get { return mAuthor; } }
 
-        private string mSvnAuthor = null;
+        public DateTime LastEdit
+        { get { return mLastEdit; } }
+
+        public string SvnId
+        { get { return mSvnId; } }
+
+        private string mSvnId = null;
+        private string mFile = null;
+        private string mAuthor = null;
+        private string mRevision = null;
+        private DateTime mLastEdit = DateTime.MinValue;
     }
 
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true, Inherited = false)]
     public class SvnHeadUrlAttribute : Attribute
     {
-        public SvnHeadUrlAttribute(string file, string headUrl)
+        public SvnHeadUrlAttribute(string headUrl)
         {
             mSvnHeadUrl = (string)headUrl.Clone();
+
+            string regex = @"^[$]HeadURL:\s(?<linkurl>" + RootURL +
+                @"(?<branch>(?:trunk|(?<type>tags/|branches/)(?<code>\w+)))" +
+                @"/(?<path>(?:.*/)*(?<file>.*\..{2,5})))\s[$]$";
+            Match match = new Regex( regex ).Match( SvnHeadUrl );
+            mSvnFile = match.Result( @"${file}" );
+            mLinkUrl = match.Result( @"${linkurl}" );
+            mHeadUrl = match.Result( @"${path}" );
+            if ( match.Result( @"${branch}" ) == "trunk" )
+            {
+                mBranch = "Trunk";
+            }
+            else
+            {
+                mBranch = match.Result( @"${type}-${code}" );
+            }
         }
+
+        public string File
+        { get { return mSvnFile; } }
 
         public string SvnHeadUrl
-        {
-            get { return mSvnHeadUrl; }
-        }
+        { get { return mSvnHeadUrl; } }
 
-        public string HeadUrl
-        {
-            get
-            {
-                return null;
-            }
-        }
+        public string URL
+        { get { return mLinkUrl; } }
 
+        public string Path
+        { get { return mHeadUrl; } }
+
+        public string Branch
+        { get { return mBranch; } }
+
+        private string mSvnFile = null;
+        private string mLinkUrl = null;
         private string mSvnHeadUrl = null;
-    }
-
-    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true, Inherited = false)]
-    public class SvnDateAttribute : Attribute
-    {
-        public SvnDateAttribute(string file, string date)
-        {
-            mSvnDate = (string)date.Clone();
-        }
-
-        public string SvnDate
-        {
-            get { return mSvnDate; }
-        }
-
-        public string Date
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-        private string mSvnDate = null;
+        private string mHeadUrl = null;
+        private string mBranch = null;
+        private readonly string RootURL = @"http://svn.berlios.de/svnroot/repos/openclogger/";
     }
 }
